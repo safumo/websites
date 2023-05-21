@@ -1,0 +1,76 @@
+*{
+    padding:0;
+    margin: 0;
+    white-space: nowrap;
+}
+body{
+    position: relative;
+    background-color: rgb(198, 198, 198);
+}
+.box{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 200px;
+    width:500px;
+    height: 500px;
+    background-color: white;
+    padding:30px;
+    border-radius: 10px;
+}
+.submit{
+    width:400px;
+    height:50px;
+    font-size: 20px;
+    text-align: center;
+    padding-bottom:2px;
+    border: #4ea4dc;
+    background-color: #4ea4dc;
+    color: white;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.submit:hover{
+    transition: .5s ease;
+    background-color: #6fb9eb;
+}
+tr>td{
+    width:200px;
+    height:50px;
+    font-size: 25px;
+    text-align: center;
+    padding: 20px;
+    /* border:1px solid black; */
+}
+tr>td>input{
+    width:400px;
+    height:25px;
+    font-size: 22px;
+    border: transparent;
+    outline:none;   
+    padding-bottom:10px;  
+    border-bottom: 1px solid #e8e8e8;
+}
+tr>td>input:focus{
+    border-bottom: 1px solid #4ea4dc;
+}
+.option{
+    color:rgb(59, 59, 59);
+    cursor: pointer;
+    position: relative;
+}
+.option>td{
+    width:200px;
+    padding-bottom: 10px;
+}
+.option>td>div{
+    padding-bottom: 18px;
+}
+.optionNonActive{
+    border-bottom: 3px solid white;
+}
+.optionActive{
+    color: #4ea4dc;
+    border-bottom: 3px solid #5cb1ea;
+}

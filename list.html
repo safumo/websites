@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="list.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="module">
+        import {verify} from "./verify.js"
+        verify();
+    </script>
+</head>
+<body>
+    <div class="box" id="box">
+        <header class="header">
+            <div class="header-title">
+                <img src="./material/news.png" alt="error">
+                <p>新闻网站</p>
+            </div>
+            <div class="list-option">
+                <div class="search">
+                    <select name="search-option" id="searchOpt" class="search-option">
+                        <option value="title">标题</option>
+                        <option value="author">作者</option>
+                        <option value="id">编号</option>
+                        <option value="category_name">类别</option>
+                    </select>
+                    <input type="text" class="search-input" id="searchInput">
+                    <button class="search-button"></button>
+                </div>
+                <div class="user">
+                    <button class="user-info"></button>
+                </div>
+            </div>
+        </header>
+        <content class="content">
+            <div class="news-add" id="add">
+                <img src="./material/add.png" alt="error">&nbsp&nbsp&nbsp
+                <p>添加新闻</p>
+            </div>
+            <div class="news">
+                <!-- <div class="news-box">
+                    <div class="pic-box">
+                        <img src="./picture/test.png" alt="error">
+                    </div>
+                    <div class="text-box">
+                        <div>
+                            <h1>克拉拉，我的克拉拉！！！</h1>
+                            <p>我是克拉拉的狗！我是克拉拉的狗！我是克拉拉的狗！我是克拉拉的狗！我是克拉拉的狗！...</p>
+                            <p class="text-target">克拉拉万岁&nbsp&nbsp&nbsp&nbsp克拉拉的狗</p>
+                        </div>
+                        <div class="manage-box">
+                            <button>详细信息</button><button>删除</button>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="index">
+            </div>
+        </content>
+        <footer class="footer">
+            <div class="footer-title">Welcome To This News Website</div>
+            <div class="footer-introduce">It is made by:</div>
+            <div class="iconBox">
+                <img src="./material/html5.png" alt="html5">
+                <img src="./material/css3.png" alt="css3">
+                <img src="./material/javascript.png" alt="javascript">
+                <img src="./material/jquery.png" alt="jquery">
+                <img src="./material/php.png" alt="php">
+                <img src="./material/mysql.png" alt="mysql">
+            </div>
+        </footer>
+    </div>
+    <script type="module">
+        import {Render,Render_index} from "./render.js"
+        let curQuest = {
+            option:"",
+            keyWord:"",
+            index:"0"
+        };
+        window.onload = ()=>{
+            // 初始化
+            Render();
+            Render_index();
+            // 事件绑定
+            document.querySelector(".search-button").onclick = ()=>{
+                curQuest = {
+                    ...curQuest,
+                    option:searchOpt.value,
+                    keyWord:searchInput.value,
+                    index:"0"
+                };
+                Render(curQuest);
+                Render_index(curQuest);
+            }
+            document.querySelector("#add").onclick = ()=>{
+                location.href = "./add.html";
+            }
+            document.querySelector(".content").onclick = (event)=>{
+                if(event.target.id.indexOf("del") != -1){
+                    var temp = confirm("你确定删除吗？");
+                    if(temp){
+                        var del_id = parseInt(event.target.id.slice(3));
+                        $.ajax({
+                            url:`./delete.php?id=${del_id}`,
+                            type:"get",
+                            success: function(res){
+                                if(res=="ok"){
+                                    alert("删除成功！"); 
+                                    Render(curQuest);
+                                    Render_index(curQuest);
+                                }
+                                else{
+                                    alert("删除失败！");
+                                }
+                            }
+                        });
+                    }
+                }
+                else if(event.target.id.indexOf("inf") != -1){
+                    location.href = `./amend.php?id=${event.target.id.slice(3)}`
+                }
+            }
+            document.querySelector(".index").onclick = (event)=>{
+                if(event.target.id.indexOf("ind") != -1){
+                    var ind_id = event.target.id.slice(3);
+                    curQuest = {
+                        ...curQuest,
+                        index:ind_id-1
+                    }
+                    Render(curQuest);
+                    Render_index(curQuest);
+                }
+                if(event.target.id == "before1"){
+                    if(parseInt(curQuest["index"]) > 0){
+                        curQuest["index"] = parseInt(curQuest["index"]) - 1 + "";
+                        Render(curQuest);
+                        Render_index(curQuest);
+                    }
+                }
+                if(event.target.id == "next1"){
+                    var num = parseInt(document.querySelector("#end1").innerHTML);
+                    if(parseInt(curQuest["index"]) + 1 < num){
+                        curQuest["index"] = parseInt(curQuest["index"]) + 1 + "";
+                        Render(curQuest);
+                        Render_index(curQuest);
+                    }
+                }
+                if(event.target.id == "start1"){
+                    curQuest["index"] = "0";
+                    Render(curQuest);
+                    Render_index(curQuest);
+                }
+                if(event.target.id == "end1"){
+                    curQuest["index"] = parseInt(event.target.innerHTML) - 1 + "";
+                    Render(curQuest);
+                    Render_index(curQuest);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
