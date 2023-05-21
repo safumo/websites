@@ -23,7 +23,7 @@ function Render(quest={}){
                 news.innerHTML += `
                 <div class="news-box">
                     <div class="pic-box">
-                        <img src="./picture/${new_data["id"]}.jpg" onerror="javascript:this.src='./picture/test.png';this.οnerrοr=null;">
+                        <img src="./picture/${new_data["id"]}.jpg" onerror="javascript:this.src='./picture/error.png';this.οnerrοr=null;">
                     </div>
                     <div class="text-box">
                         <div>
